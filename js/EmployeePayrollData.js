@@ -56,16 +56,18 @@ class EmployeePayRoll {
       this._note = note;
     }
   
-    get startDate() {
-      return this._startDate;
-    }
-    set startDate(startDate) {
-      let currentDate= new Date();
-      /// Checking if the date entered by the user is future date or not
-          if(currentDate- startDate>=0)
-              this._startDate= startDate;
-          else throw  'invalid date';
-    }
+
+    /// Defining the validation for the start date whether it's a future date or not
+    get startDate() { return this._startDate; }
+    set startDate(startDate) { 
+     let now = new Date();
+     if (startDate > now) throw 'Start Date is a Future Date!';
+     var diff = Math.abs(now.getTime() - startDate.getTime());
+     if (diff / (1000 * 60 * 60 * 24) > 30) 
+       throw 'Start Date is beyond 30 Days!';
+     this._startDate = startDate; 
+   }
+
   
     // defining toString method for aggregrating the data entered by the user
     toString() {
@@ -90,4 +92,4 @@ class EmployeePayRoll {
         this.note
       );
     }
-  }
+}
